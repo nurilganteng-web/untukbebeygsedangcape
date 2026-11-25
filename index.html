@@ -524,7 +524,12 @@ button.btn:hover{filter:brightness(1.08)}
   var wall=$('wall'), tilts=[-2.2,1.6,-1,2.2,-1.8,1.1];
   var srcs=['photos/p1.jpg','photos/p2.jpg','photos/p3.jpg','photos/p4.jpg','photos/p5.jpg','photos/p6.jpg'];
   var caps=['Berdua, paling aku suka','Kita, apa adanya','Senyum yang bikin tenang','Manisnya kamu','Bunga buat kamu','Aku yang kangen kamu'];
-  function show(i,src){var img=$('img'+i),em=$('em'+i);img.src=src;img.hidden=false;em.hidden=true}
+  function show(i,src){
+    var img=$('img'+i),em=$('em'+i);
+    img.onload=function(){img.hidden=false;em.hidden=true};
+    img.onerror=function(){img.hidden=true;em.hidden=false};
+    img.src=src;
+  }
   for(var i=0;i<6;i++){(function(i){
     var f=document.createElement('figure');f.className='polaroid';f.style.setProperty('--tilt',tilts[i]+'deg');
     f.innerHTML='<label class="ph" for="file'+i+'"><img id="img'+i+'" alt="Foto kita '+(i+1)+'" hidden>'+
